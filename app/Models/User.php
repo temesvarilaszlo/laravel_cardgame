@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function characters() : HasMany {
         return $this->hasMany(Character::class);
     }
+
+    public function contests() : HasMany {
+        return $this->hasMany(Contest::class);
+    }
 }
