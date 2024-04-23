@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('character_contest', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('hero_id');
-            $table->foreign('hero_id')->references('id')->on('characters')->onDelete('cascade');
+            $table->unsignedBigInteger('character_id');
+            $table->foreign('character_id')->references('id')->on('characters')->onDelete('cascade');
 
             $table->unsignedBigInteger('enemy_id');
             $table->foreign('enemy_id')->references('id')->on('characters')->onDelete('cascade');
@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('contest_id');
             $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
 
-            $table->float('hero_hp');
-            $table->float('enemy_hp');
+            $table->float('hero_hp')->default(20);
+            $table->float('enemy_hp')->default(20);
 
             $table->timestamps();
         });

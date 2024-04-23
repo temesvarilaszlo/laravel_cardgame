@@ -20,5 +20,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+
+        $this->call([
+            CharacterSeeder::class,
+            PlaceSeeder::class,
+            ContestSeeder::class,
+        ]);
     }
 }

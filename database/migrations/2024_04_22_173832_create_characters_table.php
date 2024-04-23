@@ -19,10 +19,10 @@ return new class extends Migration
 
             $table->string('name');
             $table->boolean('enemy')->default(false);
-            $table->integer('defence');
-            $table->integer('strength');
-            $table->integer('accuracy');
-            $table->integer('magic');
+            $table->unsignedInteger('defence')->max(4);
+            $table->unsignedInteger('strength')->max(21);
+            $table->unsignedInteger('accuracy')->max(21);
+            $table->unsignedInteger('magic')->max(21);
             $table->timestamps();
         });
     }

@@ -21,6 +21,10 @@ class Contest extends Model
         'history',
     ];
 
+    protected $casts = [
+        'history' => 'array', // Cast 'history' attribute to array when retrieving from DB
+    ];
+
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
     }
@@ -30,6 +34,6 @@ class Contest extends Model
     }
 
     public function characters() : BelongsToMany {
-        return $this->belongsToMany(Character::class);
+        return $this->belongsToMany(Character::class)->withPivot('enemy_hp', 'hero_hp');
     }
 }

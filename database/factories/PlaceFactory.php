@@ -16,10 +16,11 @@ class PlaceFactory extends Factory
      */
     public function definition(): array
     {
+        $image = fake()->boolean() ? 'image.png' : null;
         return [
             'name' => fake()->word(),
-            'image' => fake()->boolean() ? 'image.png' : null,
-            'image_hash' => fake()->boolean() ? 'image.png' : null,
+            'image' => $image,
+            'image_hash' => $image,
         ];
     }
 }
