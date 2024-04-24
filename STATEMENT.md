@@ -9,8 +9,8 @@ Kijelentem, hogy ez a megoldás a saját munkám. Nem másoltam vagy használtam
 
 ELTE Hallgatói Követelményrendszer, IK kari különös rész, 377/A. §: "Az a hallgató, aki olyan tanulmányi teljesítménymérés (vizsga, zárthelyi, beadandó feladat) során, amelynek keretében számítógépes program vagy programmodul elkészítése a feladat, az oktató által meghatározottakon kívül más segédeszközt vesz igénybe, illetve más hallgatónak meg nem engedett segítséget nyújt, tanulmányi szabálytalanságot követ el, ezért az adott félévben a tantárgyat nem teljesítheti és a tantárgy kreditjét nem szerezheti meg."
 
-[ ] - Adatbázis és modellek 3 pont
-[ ] - Seeder 3 pont
+[x] - Adatbázis és modellek 3 pont
+[x] - Seeder 3 pont
 [ ] - Főoldal 2 pont
 [ ] - Karakterek listázása oldal 2 pont
 [ ] - Karakter részletes adatai tartalmazó oldal 2 pont
