@@ -1,11 +1,27 @@
 <?php
 
+use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/', [CharacterController::class, 'indexGuest']);
+
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('characters.index'); // Redirect authenticated users to dashboard
+    } else {
+        return app(CharacterController::class)->indexGuest(); // Call indexGuest method for guest users
+    }
 });
+
+Route::middleware('auth')->group(function () {
+    Route::resource('/characters', CharacterController::class);
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
