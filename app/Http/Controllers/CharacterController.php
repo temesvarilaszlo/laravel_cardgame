@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Character;
 use App\Models\Contest;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -22,6 +25,11 @@ class CharacterController extends Controller
         $characterCount = Character::all()->count();
         $contestCount = Contest::all()->count();
         return view('character.indexGuest', ['characterCount' => $characterCount, 'contestCount' => $contestCount]);
+    }
+
+    public function showEnemies(){
+        $enemies = Character::all()->where('enemy', true);
+        return view('character.index', ['characters' => $enemies]);
     }
 
     /**
@@ -45,7 +53,18 @@ class CharacterController extends Controller
      */
     public function show(Character $character)
     {
-        //
+        try{
+            $this->authorize('view', $character);
+
+            $contests = $character->contests();
+            if (!$character){
+                abort(404);
+            }
+            return view('character.character', ['char' => $character]);
+        }
+        catch(AuthorizationException $e){
+            abort(403, 'Unauthorized action');
+        }
     }
 
     /**

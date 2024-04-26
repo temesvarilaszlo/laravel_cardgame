@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('characters/enemies', [CharacterController::class, 'showEnemies'])->name('characters.enemies');
     Route::resource('/characters', CharacterController::class);
 });
 

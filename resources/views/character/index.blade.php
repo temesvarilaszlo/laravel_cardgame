@@ -4,30 +4,83 @@
 
 @section('content')
 
-<div class="overflow-x-auto h-96">
-    <table class="table table-pin-rows">
-        <thead class="text-center">
-            <tr>
-                <th>Név</th>
-                <th>Védekezés</th>
-                <th>Támadás</th>
-                <th>Pontosság</th>
-                <th>Mágia</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            @foreach ($characters as $char)
-                <tr>
-                    <td>{{ $char->name }}</td>
-                    <td>{{ $char->defence }}</td>
-                    <td>{{ $char->strength }}</td>
-                    <td>{{ $char->accuracy }}</td>
-                    <td>{{ $char->magic }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+    <div class="flex flex-row flex-wrap justify-center gap-2">
+        @foreach ($characters as $char)
+            <div
+                class="w-full max-w-64 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex items-center justify-between mb-4">
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{{ $char->name }}</h5>
+                    <a href="{{ route('characters.show', ['character' => $char]) }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                        Részletek
+                    </a>
+                </div>
+                <div class="flow-root">
+                    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center">
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        Védekezés
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ $char->defence }}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center ">
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        Támadás
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ $char->strength }}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center">
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        Pontosság
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ $char->accuracy }}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center ">
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        Mágia
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ $char->magic }}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center ">
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        Enemy
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ $char->enemy ? "igen" : "nem" }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
 
 
