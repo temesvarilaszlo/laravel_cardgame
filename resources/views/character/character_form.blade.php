@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Form')
+@section('title', isset($char) ? $char->name : 'Új karakter')
 
 @section('content')
 
@@ -13,12 +13,13 @@
             @endisset
 
             <div class="flex items-center justify-between mb-4">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Új karakter</h5>
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{{ isset($char) ? $char->name . ' módosítása' : 'Új karakter'}}</h5>
             </div>
             <div class="flow-root">
                 <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
                     <li class="py-3 sm:py-4">
-                        <div class="flex items-center flex-col">
+                        <div class="flex flex-col">
+                            <label for="name" class="dark:text-white">Név</label>
                             <input type="text" placeholder="Név" name="name" id="name"
                                 class="text-white rounded bg-slate-700 p-1 input input-bordered w-full @error('name') input-error @enderror"
                                 value="{{ old('name', $char->name ?? '') }}">
@@ -30,7 +31,8 @@
                         </div>
                     </li>
                     <li class="py-3 sm:py-4">
-                        <div class="flex items-center flex-col">
+                        <div class="flex flex-col">
+                            <label for="defence" class="dark:text-white">Védekezés</label>
                             <input type="text" placeholder="Védekezés" name="defence" id="defence"
                                 class="text-white rounded bg-slate-700 p-1 input input-bordered w-full @error('defence') input-error @enderror"
                                 value="{{ old('defence', $char->defence ?? '') }}">
@@ -42,7 +44,8 @@
                         </div>
                     </li>
                     <li class="py-3 sm:py-4">
-                        <div class="flex items-center flex-col">
+                        <div class="flex flex-col">
+                            <label for="strength" class="dark:text-white">Támadás</label>
                             <input type="text" placeholder="Támadás" name="strength" id="strength"
                                 class="text-white rounded bg-slate-700 p-1 input input-bordered w-full @error('strength') input-error @enderror"
                                 value="{{ old('strength', $char->strength ?? '') }}">
@@ -54,7 +57,8 @@
                         </div>
                     </li>
                     <li class="py-3 sm:py-4">
-                        <div class="flex items-center flex-col">
+                        <div class="flex flex-col">
+                            <label for="accuracy" class="dark:text-white">Pontosság</label>
                             <input type="text" placeholder="Pontosság" name="accuracy" id="accuracy"
                                 class="text-white rounded bg-slate-700 p-1 input input-bordered w-full @error('accuracy') input-error @enderror"
                                 value="{{ old('accuracy', $char->accuracy ?? '') }}">
@@ -66,7 +70,8 @@
                         </div>
                     </li>
                     <li class="py-3 sm:py-4">
-                        <div class="flex items-center flex-col">
+                        <div class="flex flex-col">
+                            <label for="magic" class="dark:text-white">Mágia</label>
                             <input type="text" placeholder="Mágia" name="magic" id="magic"
                                 class="text-white rounded bg-slate-700 p-1 input input-bordered w-full @error('magic') input-error @enderror"
                                 value="{{ old('magic', $char->magic ?? '') }}">
@@ -79,11 +84,13 @@
                     </li>
                     @if (Auth::user()->admin)
                         <li class="py-3 sm:py-4">
-                            <div class="flex items-center ">
-                                <label class="dark:text-white" for="enemy">Enemy</label>
-                                <input type="checkbox" name="enemy" id="enemy"
-                                    class="input input-bordered w-full @error('enemy') input-error @enderror"
-                                    @checked(old('enemy', $char->enemy ?? '') === 'on')>
+                            <div class="flex flex-col">
+                                <div class="flex flex-row justify-start gap-1">
+                                    <label class="dark:text-white" for="enemy">Enemy</label>
+                                    <input type="checkbox" name="enemy" id="enemy"
+                                        class="input input-bordered @error('enemy') input-error @enderror"
+                                        @checked(old('enemy') === 'on' || (isset($char) ? $char->enemy : false))>
+                                </div>
                                 @error('enemy')
                                     <div class="label">
                                         <span class="label-text-alt text-red-600">{{ $message }}</span>

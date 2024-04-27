@@ -56,7 +56,7 @@ class CharacterController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->input('name'));
+        // dd($request);
         try{
             $this -> authorize('create', Character::class);
 
@@ -68,18 +68,36 @@ class CharacterController extends Controller
                 'magic' => 'required|integer|min:0|max:20',
             ]);
 
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $validator->after(function ($validator) use ($request){
                 if (($request->input('defence', 0) +
-                $request->input('strength', 0) +
-                $request->input('accuracy', 0) +
-                $request->input('magic', 0)) > 20 )
+                    $request->input('strength', 0) +
+                    $request->input('accuracy', 0) +
+                    $request->input('magic', 0)) > 20 )
                     {
                         $validator->errors()->add('sum_of_attributes', 'A védekezés, támadás, pontosság és mágia összege nem lehet nagyobb mint 20.');
+                }
+
+                if ($request->input('enemy') !== null){
+                    if ($request->input('enemy') !== 'on'){
+                        $validator->errors()->add('enemy', 'Helytelen érték!');
                     }
+                    else if (!Auth::user()->admin){
+                        $validator->errors()->add('enemy', 'Csak admin hozhat létre enemy-t!');
+                    }
+                }
             });
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
             $validatedData = $validator->validated();
             $validatedData['user_id'] = Auth::id();
+            $validatedData['enemy'] = $request->input('enemy') ? true : false;
 
             $newCharacter = Character::create($validatedData);
 
@@ -119,7 +137,13 @@ class CharacterController extends Controller
      */
     public function edit(Character $character)
     {
-        //
+        try{
+            $this -> authorize('update', $character);
+        }
+        catch(AuthorizationException $e){
+            abort(403, 'Unauthorized action');
+        }
+        return view('character.character_form', ['char' => $character]);
     }
 
     /**
@@ -127,7 +151,54 @@ class CharacterController extends Controller
      */
     public function update(Request $request, Character $character)
     {
-        //
+        try{
+            $this -> authorize('update', $character);
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string',
+                'defence' => 'required|integer|min:0|max:3',
+                'strength' => 'required|integer|min:0|max:20',
+                'accuracy' => 'required|integer|min:0|max:20',
+                'magic' => 'required|integer|min:0|max:20',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $validator->after(function ($validator) use ($request){
+                if (($request->input('defence', 0) +
+                    $request->input('strength', 0) +
+                    $request->input('accuracy', 0) +
+                    $request->input('magic', 0)) > 20 )
+                    {
+                        $validator->errors()->add('sum_of_attributes', 'A védekezés, támadás, pontosság és mágia összege nem lehet nagyobb mint 20.');
+                }
+
+                if ($request->input('enemy') !== null){
+                    if ($request->input('enemy') !== 'on'){
+                        $validator->errors()->add('enemy', 'Helytelen érték!');
+                    }
+                    else if (!Auth::user()->admin){
+                        $validator->errors()->add('enemy', 'Csak admin hozhat létre enemy-t!');
+                    }
+                }
+            });
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $validatedData = $validator->validated();
+            $validatedData['enemy'] = $request->input('enemy') ? true : false;
+
+            $character->update($validatedData);
+
+            return redirect()->route('characters.show', ['character' => $character]);
+        }
+        catch(AuthorizationException $e){
+            abort(403, 'Unauthorized action');
+        }
     }
 
     /**
@@ -135,6 +206,16 @@ class CharacterController extends Controller
      */
     public function destroy(Character $character)
     {
-        //
+        try{
+            $this->authorize('delete', $character);
+
+            $character->contests()->delete();
+            $character->delete();
+
+            return redirect()->route('characters.index');
+        }
+        catch(AuthorizationException $e){
+            abort(403, 'Unauthorized action');
+        }
     }
 }

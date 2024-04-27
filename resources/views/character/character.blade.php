@@ -4,6 +4,21 @@
 
 @section('content')
 
+    <div class="flex flex-row justify-center gap-2 mb-2">
+        <a href="{{ route('characters.edit', ['character' => $char]) }}"
+            class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            Szerkesztés
+        </a>
+        <form action="{{ route('characters.destroy', ['character' => $char]) }}" method="POST">
+            @csrf
+            @method('delete')
+            <button type="submit"
+                class="px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                Törlés
+            </button>
+        </form>
+    </div>
+
     <div class="flex flex-row flex-wrap gap-2 justify-center">
         <div
             class="w-full max-w-64 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
