@@ -4,7 +4,7 @@
 
 @section('content')
 
-<p>Karakterek száma: {{ $characterCount }} </p>
-<p>Mérkőzések száma: {{ $contestCount }} </p>
+<p class="text-white">Karakterek száma: {{ $characterCount }} </p>
+<p class="text-white">Mérkőzések száma: {{ $contestCount }} </p>
 
 @endsection

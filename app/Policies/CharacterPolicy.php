@@ -29,7 +29,7 @@ class CharacterPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user !== null;
     }
 
     /**
@@ -37,7 +37,7 @@ class CharacterPolicy
      */
     public function update(User $user, Character $character): bool
     {
-        //
+        return $user->id === $character->user_id || ($user->admin && $character->enemy);
     }
 
     /**
