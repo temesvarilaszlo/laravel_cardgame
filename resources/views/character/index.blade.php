@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="flex flex-row flex-wrap justify-center gap-2 m-2">
-        @foreach ($characters as $char)
+        @forelse ($characters as $char)
             <div
                 class="w-full max-w-64 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex items-center justify-between mb-4">
@@ -81,7 +81,9 @@
                     </ul>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="dark:text-white">Nincsenek karakterek</p>
+        @endforelse
     </div>
 
 
