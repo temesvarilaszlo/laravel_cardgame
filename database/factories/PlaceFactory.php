@@ -25,7 +25,7 @@ class PlaceFactory extends Factory
         file_put_contents($tempImagePath, $imageContent);
 
         // Use the store method to save the image, which will generate a hashed filename
-        $image = Storage::disk('public')->putFile('images', new File($tempImagePath));
+        $image = Storage::disk('public')->putFile('place_images', new File($tempImagePath));
         // $image = new File($tempImagePath)->store();
 
         // $image = $this->faker->image(storage_path('/app/public'), 200, 200, fullPath: false);

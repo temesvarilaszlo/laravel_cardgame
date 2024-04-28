@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,15 +13,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('characters.index'); // Redirect authenticated users to dashboard
+        return redirect()->route('characters.index');
     } else {
-        return app(CharacterController::class)->indexGuest(); // Call indexGuest method for guest users
+        return app(CharacterController::class)->indexGuest();
     }
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('characters/enemies', [CharacterController::class, 'showEnemies'])->name('characters.enemies');
     Route::resource('/characters', CharacterController::class);
+    Route::resource('/places', PlaceController::class);
 });
 
 

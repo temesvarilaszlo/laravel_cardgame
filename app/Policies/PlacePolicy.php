@@ -61,6 +61,6 @@ class PlacePolicy
      */
     public function forceDelete(User $user, Place $place): bool
     {
-        //
+        return $user->admin;
     }
 }

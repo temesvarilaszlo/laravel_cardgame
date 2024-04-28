@@ -82,7 +82,7 @@
                 </div>
             </div>
         @empty
-            <p class="dark:text-white">Nincsenek karakterek</p>
+            <p class="text-white">Nincsenek karakterek</p>
         @endforelse
     </div>
 
