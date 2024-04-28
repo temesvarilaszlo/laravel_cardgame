@@ -96,6 +96,14 @@
             <div
                 class="w-full min-w-64 max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="text-xl mb-2 font-bold leading-none text-gray-900 dark:text-white">Mérkőzések</h5>
+                <form action="{{ route('contests.store') }}?character_id={{$char->id}}" method="POST">
+                    @csrf
+
+                    <button type="submit"
+                        class="px-3 py-2 mb-2 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
+                        Új mérkőzés
+                    </button>
+                </form>
 
                 @if ($contests->isEmpty())
                     <p class="dark:text-white">Nincsenek mérkőzések</p>

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\ContestController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Contest;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -23,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('characters/enemies', [CharacterController::class, 'showEnemies'])->name('characters.enemies');
     Route::resource('/characters', CharacterController::class);
     Route::resource('/places', PlaceController::class);
+    Route::resource('/contests', ContestController::class);
+    // Route::post('/contests', [ContestController::class, 'store'])->name('contests.store');
 });
 
 

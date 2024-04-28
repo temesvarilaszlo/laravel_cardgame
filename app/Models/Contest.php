@@ -17,6 +17,8 @@ class Contest extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
+        'place_id',
         'win',
         'history',
     ];
